@@ -131,10 +131,18 @@
 </div>
 
 <!-- Personal config (gitignored) — defines LOCAL_LANDING_PAGE_PATTERNS etc. -->
-<!-- If the file doesn't exist, that's fine — app.js uses sensible defaults. -->
+<!-- If the file doesn't exist, that's fine — sensible defaults are used. -->
 <script src="config.local.js" onerror="/* no personal config, that's fine */"></script>
 
-<!-- Main dashboard logic — loads last so the DOM is ready -->
-<script src="app.js"></script>
+<!-- Dashboard logic — loaded in dependency order -->
+<script src="utils/domain.js"></script>
+<script src="utils/time.js"></script>
+<script src="ui/icons.js"></script>
+<script src="ui/actions.js"></script>
+<script src="service/tabs.js"></script>
+<script src="service/storage.js"></script>
+<script src="ui/renderers.js"></script>
+<script src="service/events.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
