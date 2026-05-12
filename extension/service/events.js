@@ -294,32 +294,44 @@ document.addEventListener('click', async (e) => {
   // ---- Active Tasks: Toggle State ----
   if (action === 'toggle-task-state') {
     const id = actionEl.dataset.taskId;
-    const taskItem = actionEl.closest('[data-task-id]');
+    const taskItem = actionEl.closest('.task-item, .deferred-item, .archive-item');
+
     if (!id || !taskItem) return;
 
-    // We can infer current state from the DOM or just fetch tasks. Since we might be undoing from archive, let's use the DOM class or fallback to fetching.
     const isStandby = taskItem.classList.contains('state-standby');
-    const isInactive = taskItem.classList.contains('state-inactive');
-    
-    // If it's inactive (archive), putting it back goes to standby. If standby, goes to active.
-    let newState = 'standby';
-    if (!isInactive) {
-      newState = isStandby ? 'active' : 'standby';
+    const isActive = taskItem.classList.contains('state-active');
+
+    if (isStandby) {
+      await planTaskForToday(id);
+    } else if (isActive) {
+      await removeTaskFromToday(id);
+    } else {
+      console.error('toggle-task-state: No matching state class found!');
     }
 
-    await setTaskState(id, newState);
-    
     // Render full widget to reposition tasks between lists
     await renderTasksWidget();
     return;
   }
 
-  // ---- Active Tasks: Archive Task ----
-  if (action === 'archive-task') {
+  // ---- Active Tasks: Unarchive Task ----
+  if (action === 'unarchive-task') {
     const id = actionEl.dataset.taskId;
     if (!id) return;
 
-    await setTaskState(id, 'inactive');
+    await unarchiveTask(id);
+    await renderTasksWidget();
+    return;
+  }
+
+  // ---- Active Tasks: Complete Task for Today ----
+  if (action === 'complete-task') {
+    const id = actionEl.dataset.taskId;
+    if (!id) return;
+
+    // Checkbox implies completing it for today, which moves it to standby
+    await completeTaskForToday(id);
+
     const taskItem = actionEl.closest('[data-task-id]');
     if (taskItem) {
       taskItem.classList.add('checked');
