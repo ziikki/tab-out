@@ -202,3 +202,14 @@ function smartTitle(title, url) {
 
   return title || url;
 }
+
+// Export for Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    friendlyDomain,
+    getGroupingKey,
+    stripTitleNoise,
+    cleanTitle,
+    smartTitle
+  };
+}
