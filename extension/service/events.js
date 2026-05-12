@@ -149,6 +149,28 @@ document.addEventListener('click', async (e) => {
     return;
   }
 
+  // ---- Uncheck a saved tab (moves it back from archive to active) ----
+  if (action === 'uncheck-deferred') {
+    const id = actionEl.dataset.deferredId;
+    if (!id) return;
+
+    await uncheckSavedTab(id);
+
+    // Animate item out of archive
+    const item = actionEl.closest('.archive-item');
+    if (item) {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(-10px)';
+      item.style.transition = 'all 0.2s';
+      setTimeout(() => {
+        item.remove();
+        renderDeferredColumn();
+      }, 200);
+    }
+    showToast('Moved back to saved list');
+    return;
+  }
+
   // ---- Dismiss a saved tab (removes it entirely) ----
   if (action === 'dismiss-deferred') {
     const id = actionEl.dataset.deferredId;

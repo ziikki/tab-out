@@ -234,11 +234,16 @@ function renderDeferredItem(item) {
 function renderArchiveItem(item) {
   const ago = item.completedAt ? timeAgo(item.completedAt) : timeAgo(item.savedAt);
   return `
-    <div class="archive-item">
+    <div class="archive-item" data-deferred-id="${item.id}">
       <a href="${item.url}" target="_blank" rel="noopener" class="archive-item-title" title="${(item.title || '').replace(/"/g, '&quot;')}">
         ${item.title || item.url}
       </a>
-      <span class="archive-item-date">${ago}</span>
+      <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+        <span class="archive-item-date">${ago}</span>
+        <button class="archive-undo-btn" data-action="uncheck-deferred" data-deferred-id="${item.id}" title="Put back to saved list">
+          ${ICONS.undo}
+        </button>
+      </div>
     </div>`;
 }
 

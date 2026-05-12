@@ -1160,6 +1160,34 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
   flex-shrink: 0;
 }
 
+.archive-undo-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, color 0.2s;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.archive-item:hover .archive-undo-btn {
+  opacity: 0.6;
+}
+
+.archive-undo-btn:hover {
+  opacity: 1 !important;
+  color: var(--accent-sage);
+}
+
+.archive-undo-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+
 /* ---- Refresh tabs button ---- */
 .refresh-tabs-btn {
   background: none;

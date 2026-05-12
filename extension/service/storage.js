@@ -72,6 +72,21 @@ async function checkOffSavedTab(id) {
 }
 
 /**
+ * uncheckSavedTab(id)
+ *
+ * Marks an archived tab as active again (moves it back to the checklist).
+ */
+async function uncheckSavedTab(id) {
+  const { deferred = [] } = await chrome.storage.local.get('deferred');
+  const tab = deferred.find(t => t.id === id);
+  if (tab) {
+    tab.completed = false;
+    delete tab.completedAt;
+    await chrome.storage.local.set({ deferred });
+  }
+}
+
+/**
  * dismissSavedTab(id)
  *
  * Marks a saved tab as dismissed (removed from all lists).
