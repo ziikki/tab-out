@@ -1,10 +1,21 @@
-# Tab Out
+# Tab Out (Fork)
 
 **Keep tabs on your tabs.**
+
+> This is a fork of [Tab Out](https://github.com/zarazhangrui/tab-out) by [Zara Zhang](https://x.com/zarazhangrui). The original is a beautifully designed Chrome extension — this fork adds a few tweaks on top.
 
 Tab Out is a Chrome extension that replaces your new tab page with a dashboard of everything you have open. Tabs are grouped by domain, with homepages (Gmail, X, LinkedIn, etc.) pulled into their own group. Close tabs with a satisfying swoosh + confetti.
 
 No server. No account. No external API calls. Just a Chrome extension.
+
+---
+
+## Fork Changes
+
+- **Browser internal tabs** (`chrome://`, `about:`, etc.) are now shown in a "Browser" group instead of hidden
+- **Debug mode** — small toggle icon in the top-right reveals the raw domain key for each group
+- **Refresh button** — re-reads your open tabs without opening a new tab
+- **Google homepage** added to the Homepages landing page group
 
 ---
 
@@ -13,7 +24,7 @@ No server. No account. No external API calls. Just a Chrome extension.
 Send your coding agent (Claude Code, Codex, etc.) this repo and say **"install this"**:
 
 ```
-https://github.com/zarazhangrui/tab-out
+https://github.com/ziikki/tab-out
 ```
 
 The agent will walk you through it. Takes about 1 minute.
@@ -40,7 +51,7 @@ The agent will walk you through it. Takes about 1 minute.
 **1. Clone the repo**
 
 ```bash
-git clone https://github.com/zarazhangrui/tab-out.git
+git clone https://github.com/ziikki/tab-out.git
 ```
 
 **2. Load the Chrome extension**
@@ -84,8 +95,8 @@ Everything runs inside the Chrome extension. No external server, no API calls, n
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE)
 
 ---
 
-Built by [Zara](https://x.com/zarazhangrui)
+Originally built by [Zara Zhang](https://x.com/zarazhangrui). Forked by [Solareda](https://github.com/ziikki).
