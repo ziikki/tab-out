@@ -81,7 +81,7 @@ function renderActiveTaskItem(t) {
 function renderStandbyTaskItem(t) {
   return `
     <div class="deferred-item state-standby" data-task-id="${t.id}" style="width: 100%;">
-      <button class="action-icon-btn" data-action="archive-task" data-task-id="${t.id}" title="Make active" style="color:${t.color}; margin-top:2px;">
+      <button class="action-icon-btn" data-action="toggle-task-state" data-task-id="${t.id}" title="Make active" style="color:${t.color}; margin-top:2px;">
         ${ICONS.campground}
       </button>
       <div class="deferred-info" style="flex:1; min-width:0;">

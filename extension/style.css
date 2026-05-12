@@ -66,6 +66,8 @@ header {
   margin-bottom: 48px;
   padding-bottom: 24px;
   border-bottom: 1px solid var(--warm-gray);
+  position: relative;
+  z-index: 100;
 }
 
 .header-left h1 {
@@ -1362,6 +1364,123 @@ footer {
   color: var(--accent-sage);
   background: rgba(90, 122, 98, 0.08);
   border-color: rgba(90, 122, 98, 0.25);
+}
+
+/* ---- Settings toggle & panel ---- */
+.header-right {
+  display: flex;
+  gap: 8px;
+  position: relative;
+}
+
+.settings-toggle {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--muted);
+  opacity: 0.35;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.settings-toggle:hover,
+.settings-toggle.active {
+  opacity: 1;
+  color: var(--accent-sage);
+  border-color: var(--warm-gray);
+}
+
+.settings-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 320px;
+  background: #ffffff !important; /* Force solid white */
+  border: 1px solid var(--warm-gray);
+  border-radius: 12px;
+  box-shadow: 0 20px 48px rgba(26, 22, 19, 0.15); /* Stronger shadow */
+  z-index: 9999 !important; /* Above everything */
+  padding: 24px;
+  display: block;
+  pointer-events: auto !important;
+  animation: bannerSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.settings-header {
+  font-family: 'Newsreader', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--warm-gray);
+  padding-bottom: 8px;
+}
+
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settings-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Segmented Toggle */
+.toggle-group {
+  display: flex;
+  background: var(--paper);
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid var(--warm-gray);
+}
+
+.toggle-group label {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+}
+
+.toggle-group input {
+  display: none;
+}
+
+.toggle-group span {
+  display: block;
+  padding: 8px 4px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+
+.toggle-group input:checked + span {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.settings-subtext {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 4px;
+  padding: 0 4px;
+  opacity: 0.8;
 }
 
 /* ---- Debug label — hidden by default, shown in debug mode ---- */

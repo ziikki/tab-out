@@ -24,6 +24,8 @@ async function renderStaticDashboard() {
   const displayTabs = openTabs.filter(t => !t.isTabOut);
 
   // --- Group tabs by domain ---
+  const groupingMode = await getGroupingMode();
+
   const LANDING_PAGE_PATTERNS = [
     {
       hostname: 'mail.google.com', test: (p, h) =>
@@ -96,10 +98,12 @@ async function renderStaticDashboard() {
         groupMap[key].tabs.push(tab);
         continue;
       }
-      let hostname = tab.url && tab.url.startsWith('file://') ? 'local-files' : new URL(tab.url).hostname;
-      if (!hostname) continue;
-      if (!groupMap[hostname]) groupMap[hostname] = { domain: hostname, tabs: [] };
-      groupMap[hostname].tabs.push(tab);
+      let rawHostname = tab.url && tab.url.startsWith('file://') ? 'local-files' : new URL(tab.url).hostname;
+      if (!rawHostname) continue;
+      
+      const groupKey = getGroupingKey(rawHostname, groupingMode);
+      if (!groupMap[groupKey]) groupMap[groupKey] = { domain: groupKey, tabs: [] };
+      groupMap[groupKey].tabs.push(tab);
     } catch { }
   }
 

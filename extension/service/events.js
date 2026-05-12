@@ -434,4 +434,38 @@ document.addEventListener('click', (e) => {
   document.body.classList.toggle('debug-mode');
   toggle.classList.toggle('active');
 });
+// ---- Settings toggle ----
+document.addEventListener('click', (e) => {
+  const toggle = e.target.closest('#settingsToggle');
+  const panel = document.getElementById('settingsPanel');
+  if (toggle) {
+    const isHidden = panel.style.display === 'none';
+    panel.style.display = isHidden ? 'block' : 'none';
+    toggle.classList.toggle('active', isHidden);
+    return;
+  }
 
+  // Close panel when clicking outside
+  if (panel && panel.style.display !== 'none' && !panel.contains(e.target)) {
+    panel.style.display = 'none';
+    document.getElementById('settingsToggle').classList.remove('active');
+  }
+});
+
+// ---- Settings: Grouping Mode Change ----
+document.addEventListener('change', async (e) => {
+  if (e.target.name === 'groupingMode') {
+    const mode = e.target.value;
+    await setGroupingMode(mode);
+    await renderStaticDashboard();
+
+    const hint = document.getElementById('groupingModeHint');
+    if (hint) {
+      hint.textContent = mode === 'hostname'
+        ? 'Tabs are grouped by their specific address (e.g., play.google.com).'
+        : 'Subdomains are merged into their base domain (e.g., all google.com tabs).';
+    }
+
+    showToast(`Grouping mode: ${mode === 'hostname' ? 'Full Hostname' : 'Base Domain'}`);
+  }
+});

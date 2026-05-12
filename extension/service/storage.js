@@ -99,3 +99,22 @@ async function dismissSavedTab(id) {
     await chrome.storage.local.set({ deferred });
   }
 }
+
+/**
+ * getGroupingMode()
+ * 
+ * Returns the current grouping mode: 'hostname' (default) or 'domain'.
+ */
+async function getGroupingMode() {
+  const { groupingMode = 'hostname' } = await chrome.storage.local.get('groupingMode');
+  return groupingMode;
+}
+
+/**
+ * setGroupingMode(mode)
+ * 
+ * Sets the grouping mode to 'hostname' or 'domain'.
+ */
+async function setGroupingMode(mode) {
+  await chrome.storage.local.set({ groupingMode: mode });
+}

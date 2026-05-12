@@ -100,6 +100,29 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+/**
+ * getGroupingKey(hostname, mode)
+ * 
+ * Returns the key used for grouping tabs.
+ * - mode 'hostname': returns full hostname (e.g. play.google.com)
+ * - mode 'domain': returns base domain (e.g. google.com)
+ */
+function getGroupingKey(hostname, mode) {
+  if (!hostname) return '';
+  if (mode === 'hostname') return hostname;
+
+  // Simple base domain extraction (works for most common TLDs)
+  // For production usage, a library like psl (Public Suffix List) would be better.
+  const parts = hostname.split('.');
+  if (parts.length <= 2) return hostname;
+  
+  // Handle co.uk, com.au, etc. (basic check)
+  const isSecondLevel = ['co', 'com', 'org', 'net', 'gov', 'edu'].includes(parts[parts.length - 2]);
+  const sliceCount = isSecondLevel ? 3 : 2;
+  
+  return parts.slice(-sliceCount).join('.');
+}
+
 function stripTitleNoise(title) {
   if (!title) return '';
   // Strip leading notification count: "(2) Title"
