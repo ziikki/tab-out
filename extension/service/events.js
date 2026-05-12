@@ -290,6 +290,98 @@ document.addEventListener('click', async (e) => {
     showToast('All tabs closed. Fresh start.');
     return;
   }
+
+  // ---- Active Tasks: Toggle State ----
+  if (action === 'toggle-task-state') {
+    const id = actionEl.dataset.taskId;
+    const taskItem = actionEl.closest('[data-task-id]');
+    if (!id || !taskItem) return;
+
+    // We can infer current state from the DOM or just fetch tasks. Since we might be undoing from archive, let's use the DOM class or fallback to fetching.
+    const isStandby = taskItem.classList.contains('state-standby');
+    const isInactive = taskItem.classList.contains('state-inactive');
+    
+    // If it's inactive (archive), putting it back goes to standby. If standby, goes to active.
+    let newState = 'standby';
+    if (!isInactive) {
+      newState = isStandby ? 'active' : 'standby';
+    }
+
+    await setTaskState(id, newState);
+    
+    // Render full widget to reposition tasks between lists
+    await renderTasksWidget();
+    return;
+  }
+
+  // ---- Active Tasks: Archive Task ----
+  if (action === 'archive-task') {
+    const id = actionEl.dataset.taskId;
+    if (!id) return;
+
+    await setTaskState(id, 'inactive');
+    const taskItem = actionEl.closest('[data-task-id]');
+    if (taskItem) {
+      taskItem.classList.add('checked');
+      setTimeout(() => {
+        taskItem.classList.add('removing');
+        setTimeout(async () => {
+          await renderTasksWidget();
+        }, 300);
+      }, 800);
+    } else {
+      await renderTasksWidget();
+    }
+    return;
+  }
+
+  // ---- Active Tasks: Delete Task ----
+  if (action === 'delete-task') {
+    const id = actionEl.dataset.taskId;
+    if (!id) return;
+
+    await deleteTask(id);
+    const taskItem = actionEl.closest('[data-task-id]');
+    if (taskItem) {
+      taskItem.style.transition = 'all 0.2s';
+      taskItem.style.opacity = '0';
+      taskItem.style.transform = 'scale(0.95)';
+      setTimeout(async () => {
+        await renderTasksWidget();
+      }, 200);
+    } else {
+      await renderTasksWidget();
+    }
+    return;
+  }
+
+  // ---- Active Tasks: Toggle Archive View ----
+  if (action === 'toggle-tasks-archive') {
+    const list = document.getElementById('tasksArchiveListWrap');
+    if (list) {
+      const isHidden = list.style.display === 'none';
+      list.style.display = isHidden ? 'block' : 'none';
+      const chevron = actionEl.querySelector('.archive-chevron');
+      if (chevron) {
+        chevron.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+      }
+    }
+    return;
+  }
+});
+
+// ---- Active Tasks: Add Task via Enter Key ----
+document.addEventListener('keyup', async (e) => {
+  if (e.target.id === 'newTaskInput' && e.key === 'Enter') {
+    const val = e.target.value;
+    if (val.trim()) {
+      await addTask(val);
+      e.target.value = '';
+      window._tasksInputFocused = true;
+      await renderTasksWidget();
+      window._tasksInputFocused = false;
+    }
+  }
 });
 
 // ---- Archive toggle — expand/collapse the archive section ----

@@ -20,7 +20,11 @@
   --shadow: rgba(26, 22, 19, 0.06);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-family: 'DM Sans', sans-serif;
@@ -238,8 +242,10 @@ header {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  break-inside: avoid;       /* don't split a card across columns */
-  margin-bottom: 12px;       /* vertical spacing (replaces grid gap) */
+  break-inside: avoid;
+  /* don't split a card across columns */
+  margin-bottom: 12px;
+  /* vertical spacing (replaces grid gap) */
 }
 
 /* Colored top border instead of side bar for grid cards */
@@ -253,9 +259,17 @@ header {
   background: var(--warm-gray);
 }
 
-.mission-card.has-active-bar::before { background: var(--status-active); }
-.mission-card.has-amber-bar::before { background: var(--accent-amber); }
-.mission-card.has-neutral-bar::before { background: var(--warm-gray); }
+.mission-card.has-active-bar::before {
+  background: var(--status-active);
+}
+
+.mission-card.has-amber-bar::before {
+  background: var(--accent-amber);
+}
+
+.mission-card.has-neutral-bar::before {
+  background: var(--warm-gray);
+}
 
 .mission-card:hover {
   box-shadow: 0 4px 20px var(--shadow);
@@ -444,6 +458,10 @@ header {
   background: rgba(154, 145, 138, 0.1);
 }
 
+.chip-action {
+  opacity: 1;
+}
+
 .chip-save:hover {
   color: var(--accent-sage);
   background: rgba(90, 122, 98, 0.08);
@@ -580,7 +598,7 @@ header {
   font-weight: 500;
   padding: 12px 24px;
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   z-index: 100;
   opacity: 0;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -656,30 +674,92 @@ footer {
 
 /* ---- Animations ---- */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-header { animation: fadeUp 0.5s ease both; }
-.tab-cleanup-banner { animation: fadeUp 0.5s ease 0.1s both; }
-.nudge-banner { animation: fadeUp 0.5s ease 0.15s both; }
-.active-section .section-header { animation: fadeUp 0.5s ease 0.2s both; }
-.active-section .missions .mission-card:nth-child(1) { animation: fadeUp 0.4s ease 0.25s both; }
-.active-section .missions .mission-card:nth-child(2) { animation: fadeUp 0.4s ease 0.3s both; }
-.active-section .missions .mission-card:nth-child(3) { animation: fadeUp 0.4s ease 0.35s both; }
-.active-section .missions .mission-card:nth-child(4) { animation: fadeUp 0.4s ease 0.4s both; }
-.abandoned-section .section-header { animation: fadeUp 0.5s ease 0.45s both; }
-.abandoned-section .missions .mission-card:nth-child(1) { animation: fadeUp 0.4s ease 0.5s both; }
-.abandoned-section .missions .mission-card:nth-child(2) { animation: fadeUp 0.4s ease 0.55s both; }
-.abandoned-section .missions .mission-card:nth-child(3) { animation: fadeUp 0.4s ease 0.6s both; }
-footer { animation: fadeUp 0.5s ease 0.65s both; }
+header {
+  animation: fadeUp 0.5s ease both;
+}
 
-.deferred-list .deferred-item:nth-child(1) { animation-delay: 0.05s; }
-.deferred-list .deferred-item:nth-child(2) { animation-delay: 0.1s; }
-.deferred-list .deferred-item:nth-child(3) { animation-delay: 0.15s; }
-.deferred-list .deferred-item:nth-child(4) { animation-delay: 0.2s; }
-.deferred-list .deferred-item:nth-child(5) { animation-delay: 0.25s; }
-.deferred-column .section-header { animation: fadeUp 0.5s ease 0.1s both; }
+.tab-cleanup-banner {
+  animation: fadeUp 0.5s ease 0.1s both;
+}
+
+.nudge-banner {
+  animation: fadeUp 0.5s ease 0.15s both;
+}
+
+.active-section .section-header {
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+
+.active-section .missions .mission-card:nth-child(1) {
+  animation: fadeUp 0.4s ease 0.25s both;
+}
+
+.active-section .missions .mission-card:nth-child(2) {
+  animation: fadeUp 0.4s ease 0.3s both;
+}
+
+.active-section .missions .mission-card:nth-child(3) {
+  animation: fadeUp 0.4s ease 0.35s both;
+}
+
+.active-section .missions .mission-card:nth-child(4) {
+  animation: fadeUp 0.4s ease 0.4s both;
+}
+
+.abandoned-section .section-header {
+  animation: fadeUp 0.5s ease 0.45s both;
+}
+
+.abandoned-section .missions .mission-card:nth-child(1) {
+  animation: fadeUp 0.4s ease 0.5s both;
+}
+
+.abandoned-section .missions .mission-card:nth-child(2) {
+  animation: fadeUp 0.4s ease 0.55s both;
+}
+
+.abandoned-section .missions .mission-card:nth-child(3) {
+  animation: fadeUp 0.4s ease 0.6s both;
+}
+
+footer {
+  animation: fadeUp 0.5s ease 0.65s both;
+}
+
+.deferred-list .deferred-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.deferred-list .deferred-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.deferred-list .deferred-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.deferred-list .deferred-item:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.deferred-list .deferred-item:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.deferred-column .section-header {
+  animation: fadeUp 0.5s ease 0.1s both;
+}
 
 
 /* ================================================================
@@ -729,7 +809,7 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 
   /* Soft sage glow */
   box-shadow: 0 0 0 8px rgba(90, 122, 98, 0.05),
-              0 0 0 16px rgba(90, 122, 98, 0.03);
+    0 0 0 16px rgba(90, 122, 98, 0.03);
 
   display: flex;
   align-items: center;
@@ -747,8 +827,15 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 }
 
 @keyframes checkPop {
-  from { transform: scale(0.6); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .empty-title {
@@ -797,8 +884,15 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 }
 
 @keyframes bannerSlideIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Left cluster: icon + text */
@@ -807,7 +901,8 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
   align-items: center;
   gap: 10px;
   flex: 1;
-  min-width: 0; /* prevents text overflow from breaking layout */
+  min-width: 0;
+  /* prevents text overflow from breaking layout */
 }
 
 .update-banner-icon {
@@ -851,7 +946,8 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 }
 
 .update-banner-btn:hover {
-  background: #4a6952; /* slightly darker sage */
+  background: #4a6952;
+  /* slightly darker sage */
 }
 
 .update-banner-btn:disabled {
@@ -919,6 +1015,7 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
   .dashboard-columns {
     flex-direction: column;
   }
+
   .deferred-column {
     width: 100%;
     position: static;
@@ -1006,40 +1103,69 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 }
 
 /* Checked-off item — strikethrough + faded */
-.deferred-item.checked .deferred-title {
+.deferred-item.checked .deferred-title,
+.task-item.checked .task-text {
   text-decoration: line-through;
   color: var(--muted);
 }
 
-.deferred-item.checked .deferred-meta {
+.deferred-item.checked .deferred-meta,
+.task-item.checked .deferred-meta {
   opacity: 0.5;
 }
 
-/* Dismiss (X) button */
-.deferred-dismiss {
+/* ---- Action icon buttons (universal class) ---- */
+.action-icon-btn {
   background: none;
   border: none;
   color: var(--muted);
   cursor: pointer;
-  padding: 2px;
-  opacity: 0.3;
-  transition: opacity 0.15s, color 0.15s;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, color 0.2s, transform 0.1s;
   flex-shrink: 0;
-  margin-top: 1px;
+  opacity: 1;
 }
 
-.deferred-dismiss svg {
+.action-icon-btn svg {
   width: 14px;
   height: 14px;
 }
 
-.deferred-dismiss:hover {
-  opacity: 1;
+/* Default hover for all icon buttons */
+.action-icon-btn:hover {
+  opacity: 1 !important;
+  transform: scale(1.1);
+  color: var(--ink); /* Neutral darker grey on hover */
+}
+
+/* Destructive actions (like delete) turn red on hover */
+.action-icon-btn.destructive:hover {
   color: var(--status-abandoned);
 }
 
+.action-icon-btn.undo-btn:hover {
+  color: var(--accent-sage);
+}
+
+/* Modifier: Hidden until parent hover */
+.action-icon-btn.invisible {
+  opacity: 0;
+}
+
+/* Reveal logic for invisible buttons */
+.task-item:hover .action-icon-btn.invisible,
+.deferred-item:hover .action-icon-btn.invisible,
+.archive-item:hover .action-icon-btn.invisible,
+.page-chip:hover .action-icon-btn.invisible {
+  opacity: 0.6;
+}
+
 /* Slide-out animation for items being removed */
-.deferred-item.removing {
+.deferred-item.removing,
+.task-item.removing {
   opacity: 0;
   transform: translateX(20px);
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -1160,32 +1286,7 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
   flex-shrink: 0;
 }
 
-.archive-undo-btn {
-  background: none;
-  border: none;
-  color: var(--muted);
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.2s, color 0.2s;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.archive-item:hover .archive-undo-btn {
-  opacity: 0.6;
-}
-
-.archive-undo-btn:hover {
-  opacity: 1 !important;
-  color: var(--accent-sage);
-}
-
-.archive-undo-btn svg {
-  width: 14px;
-  height: 14px;
-}
+/* Moved to .invisible-action-btn */
 
 
 /* ---- Refresh tabs button ---- */
@@ -1222,8 +1323,13 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ---- Debug mode toggle button ---- */
@@ -1272,4 +1378,131 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 
 body.debug-mode .domain-debug-label {
   display: inline-block;
+}
+
+/* ================================================================
+   ACTIVE TASKS WIDGET
+   ================================================================ */
+
+.tasks-widget {
+  background: var(--card-bg);
+  border: 1px solid var(--warm-gray);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-input-wrap {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--warm-gray);
+}
+
+.task-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+}
+
+.task-input::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+/* Scrollable container for the task lists */
+.tasks-scroll-area {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* Hide scrollbar for a cleaner look */
+.tasks-scroll-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tasks-scroll-area::-webkit-scrollbar-thumb {
+  background-color: var(--warm-gray);
+  border-radius: 3px;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-list-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 12px 16px 4px 16px;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(154, 145, 138, 0.08);
+  gap: 12px;
+  transition: background-color 0.15s;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-item:hover {
+  background: rgba(154, 145, 138, 0.04);
+}
+
+/* Styles moved to .action-icon-btn section */
+
+.task-text {
+  flex: 1;
+  font-size: 13px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-item.state-standby .task-text {
+  color: var(--muted);
+}
+
+.task-item.state-inactive .task-text {
+  color: var(--muted);
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Moved to .invisible-action-btn */
+
+.tasks-archive-toggle {
+  padding: 8px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.02);
+  border-top: 1px solid var(--warm-gray);
+  cursor: pointer;
+}
+
+.tasks-archive-toggle span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.tasks-archive-toggle:hover span {
+  color: var(--ink);
+}
+
+/* Color indicator using left border */
+.task-item {
+  border-left: 3px solid transparent;
 }
