@@ -1,0 +1,12 @@
+// Personal config — never pushed to GitHub
+// Use this to override or add to the default grouping rules
+
+const LOCAL_LANDING_PAGE_PATTERNS = [
+  // Example: Group your company's internal tools under one "Landing Pages" card
+  // { hostname: 'internal.company.com', pathExact: ['/dashboard'] }
+];
+
+const LOCAL_CUSTOM_GROUPS = [
+  // Example: Group all staging URLs into a single "Staging" card
+  // { hostnameEndsWith: 'staging.company.com', groupKey: '__staging__', groupLabel: 'Staging Env' }
+];

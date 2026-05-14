@@ -1023,14 +1023,17 @@ footer {
   min-width: 600px;
 }
 
-/* Saved for later column — fixed width on the right, scrolls independently */
-.deferred-column {
+/* Right sidebar — fixed width on the right, scrolls independently */
+.right-sidebar {
   width: 280px;
   flex-shrink: 0;
   position: sticky;
   top: 32px;
   max-height: calc(100vh - 64px);
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 /* On narrow screens, stack vertically */
@@ -1039,7 +1042,7 @@ footer {
     flex-direction: column;
   }
 
-  .deferred-column {
+  .right-sidebar {
     width: 100%;
     position: static;
   }
@@ -1159,7 +1162,8 @@ footer {
 .action-icon-btn:hover {
   opacity: 1 !important;
   transform: scale(1.1);
-  color: var(--ink); /* Neutral darker grey on hover */
+  color: var(--ink);
+  /* Neutral darker grey on hover */
 }
 
 /* Destructive actions (like delete) turn red on hover */
@@ -1422,11 +1426,14 @@ footer {
   top: calc(100% + 12px);
   right: 0;
   width: 320px;
-  background: #ffffff !important; /* Force solid white */
+  background: #ffffff !important;
+  /* Force solid white */
   border: 1px solid var(--warm-gray);
   border-radius: 12px;
-  box-shadow: 0 20px 48px rgba(26, 22, 19, 0.15); /* Stronger shadow */
-  z-index: 9999 !important; /* Above everything */
+  box-shadow: 0 20px 48px rgba(26, 22, 19, 0.15);
+  /* Stronger shadow */
+  z-index: 9999 !important;
+  /* Above everything */
   padding: 24px;
   display: block;
   pointer-events: auto !important;
@@ -1486,7 +1493,7 @@ footer {
   transition: all 0.2s;
 }
 
-.toggle-group input:checked + span {
+.toggle-group input:checked+span {
   background: #fff;
   color: var(--ink);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
