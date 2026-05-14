@@ -95,22 +95,6 @@
 
       <!-- LEFT COLUMN: Active Tasks & Open Tabs -->
       <div style="display: flex; flex-direction: column; gap: 24px; flex: 1; min-width: 600px;">
-        <div id="activeTasksCol">
-          <div class="tasks-widget">
-            <div class="task-input-wrap">
-              <input type="text" class="task-input" id="newTaskInput" placeholder="What are you focusing on? + Enter"
-                autocomplete="off" spellcheck="false">
-            </div>
-            <div class="tasks-scroll-area">
-              <!-- <div class="task-list-title">Working on</div> -->
-              <div class="task-list" id="activeTasksList"></div>
-              <div id="activeTasksEmpty"
-                style="font-size:12px; color:var(--muted); padding: 12px 16px; font-style:italic; display:none;">
-                <span class="tasks-empty-msg">No active tasks</span>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div class="active-section" id="openTabsSection" style="display:none">
           <div class="section-header">
@@ -124,30 +108,6 @@
 
       <!-- RIGHT COLUMN: Standby Tasks & Saved for Later checklist -->
       <div style="display: flex; flex-direction: column; gap: 24px; width: 280px; flex-shrink: 0;">
-        <div id="standbyTasksCol">
-          <div class="section-header">
-            <h2>Standby</h2>
-            <div class="section-line"></div>
-            <div class="section-count" id="standbyTasksCount"></div>
-          </div>
-          <div class="task-list" id="standbyTasksList" style="margin-bottom: 16px;"></div>
-          <div class="deferred-empty" id="standbyTasksEmpty" style="display:none; margin-bottom: 16px; display:block;">
-            Nothing on standby.</div>
-
-          <div class="deferred-archive" id="inactiveTasksArchive"
-            style="display:none; margin-top:0; border-top: 1px solid var(--warm-gray)">
-            <button class="archive-toggle" data-action="toggle-tasks-archive" style="padding:8px 0;">
-              <span>Inactive (<span id="inactiveTasksCount">0</span>)</span>
-              <svg class="archive-chevron" style="width:12px;height:12px" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
-            </button>
-            <div class="archive-body" id="tasksArchiveListWrap" style="display:none; padding-top:0">
-              <div class="archive-list" id="inactiveTasksList"></div>
-            </div>
-          </div>
-        </div>
 
         <div class="deferred-column" id="deferredColumn" style="display:none">
           <div class="section-header">
@@ -227,8 +187,7 @@
   <script src="ui/actions.js"></script>
   <script src="service/tabs.js"></script>
   <script src="service/storage.js"></script>
-  <script src="service/tasks.js"></script>
-  <script src="ui/renderer_tasks.js"></script>
+
   <script src="ui/renderer_tabs.js"></script>
   <script src="ui/renderers.js"></script>
   <script src="service/events.js"></script>

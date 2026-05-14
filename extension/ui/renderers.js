@@ -54,9 +54,6 @@ function groupTabsByWindow(displayTabs) {
  * The main orchestrator function that triggers all sub-renderers.
  */
 async function renderStaticDashboard() {
-  // --- Active Tasks ---
-  await renderTasksWidget();
-
   // --- Header ---
   const greetingEl = document.getElementById('greeting');
   const dateEl = document.getElementById('dateDisplay');
