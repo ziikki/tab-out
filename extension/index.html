@@ -49,6 +49,7 @@
 
         <div class="settings-panel" id="settingsPanel" style="display:none">
           <div class="settings-header">Settings</div>
+          
           <div class="settings-group">
             <div class="settings-label">Grouping Mode</div>
             <div class="toggle-group" id="groupingModeToggle">
@@ -65,6 +66,24 @@
               Tabs are grouped by their specific address (e.g., play.google.com).
             </div>
           </div>
+
+          <div class="settings-group" style="margin-top: 16px;">
+            <div class="settings-label">Google Tasks</div>
+            <div class="toggle-group" id="googleTasksToggle">
+              <label>
+                <input type="radio" name="googleTasksEnabled" value="false" checked>
+                <span>Hidden</span>
+              </label>
+              <label>
+                <input type="radio" name="googleTasksEnabled" value="true">
+                <span>Enabled</span>
+              </label>
+            </div>
+            <div class="settings-subtext">
+              Show Google Tasks in the right sidebar.
+            </div>
+          </div>
+
         </div>
       </div>
     </header>
@@ -111,7 +130,7 @@
       <div class="right-sidebar">
 
         <!-- Google Tasks embed -->
-        <div class="google-tasks-section" id="googleTasksSection">
+        <div class="google-tasks-section" id="googleTasksSection" style="display:none">
           <div class="section-header">
             <h2>Google Tasks</h2>
             <div class="section-line"></div>

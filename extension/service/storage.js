@@ -118,3 +118,22 @@ async function getGroupingMode() {
 async function setGroupingMode(mode) {
   await chrome.storage.local.set({ groupingMode: mode });
 }
+
+/**
+ * getGoogleTasksEnabled()
+ * 
+ * Returns boolean whether the Google Tasks iframe is enabled. Default false.
+ */
+async function getGoogleTasksEnabled() {
+  const { googleTasksEnabled = false } = await chrome.storage.local.get('googleTasksEnabled');
+  return googleTasksEnabled;
+}
+
+/**
+ * setGoogleTasksEnabled(enabled)
+ * 
+ * Sets whether the Google Tasks iframe is enabled.
+ */
+async function setGoogleTasksEnabled(enabled) {
+  await chrome.storage.local.set({ googleTasksEnabled: enabled });
+}

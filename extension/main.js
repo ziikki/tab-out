@@ -22,6 +22,17 @@ async function initSettings() {
       ? 'Tabs are grouped by their specific address (e.g., play.google.com).'
       : 'Subdomains are merged into their base domain (e.g., all google.com tabs).';
   }
+
+  const tasksEnabled = await getGoogleTasksEnabled();
+  const tasksRadios = document.querySelectorAll('input[name="googleTasksEnabled"]');
+  tasksRadios.forEach(r => {
+    if ((r.value === 'true') === tasksEnabled) r.checked = true;
+  });
+
+  const tasksSection = document.getElementById('googleTasksSection');
+  if (tasksSection) {
+    tasksSection.style.display = tasksEnabled ? 'block' : 'none';
+  }
 }
 
 // Handle broken favicons without violating CSP (replaces inline onerror)

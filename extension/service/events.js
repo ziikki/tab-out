@@ -399,5 +399,13 @@ document.addEventListener('change', async (e) => {
     }
 
     showToast(`Grouping mode: ${mode === 'hostname' ? 'Full Hostname' : 'Base Domain'}`);
+  } else if (e.target.name === 'googleTasksEnabled') {
+    const enabled = e.target.value === 'true';
+    await setGoogleTasksEnabled(enabled);
+    const tasksSection = document.getElementById('googleTasksSection');
+    if (tasksSection) {
+      tasksSection.style.display = enabled ? 'block' : 'none';
+    }
+    showToast(`Google Tasks: ${enabled ? 'Enabled' : 'Hidden'}`);
   }
 });
