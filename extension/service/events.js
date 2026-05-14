@@ -197,15 +197,10 @@ document.addEventListener('click', async (e) => {
     });
     if (!group) return;
 
-    const urls = group.tabs.map(t => t.url);
-    // Landing pages and custom groups (whose domain key isn't a real hostname)
-    // must use exact URL matching to avoid closing unrelated tabs
-    const useExact = group.domain === '__landing-pages__' || group.domain === '__browser-internals__' || !!group.label;
-
-    if (useExact) {
-      await closeTabsExact(urls);
-    } else {
-      await closeTabsByUrls(urls);
+    const tabIds = group.tabs.map(t => t.id).filter(id => id !== undefined);
+    if (tabIds.length > 0) {
+      await chrome.tabs.remove(tabIds);
+      await fetchOpenTabs();
     }
 
     if (card) {
@@ -218,7 +213,7 @@ document.addEventListener('click', async (e) => {
     if (idx !== -1) domainGroups.splice(idx, 1);
 
     const groupLabel = group.domain === '__landing-pages__' ? 'Homepages' : group.domain === '__browser-internals__' ? 'Browser' : (group.label || friendlyDomain(group.domain));
-    showToast(`Closed ${urls.length} tab${urls.length !== 1 ? 's' : ''} from ${groupLabel}`);
+    showToast(`Closed ${tabIds.length} tab${tabIds.length !== 1 ? 's' : ''} from ${groupLabel}`);
 
     const statTabs = document.getElementById('statTabs');
     if (statTabs) statTabs.textContent = openTabs.length;
@@ -273,21 +268,38 @@ document.addEventListener('click', async (e) => {
 
   // ---- Close ALL open tabs ----
   if (action === 'close-all-open-tabs') {
-    const allUrls = openTabs
-      .filter(t => t.url && !t.url.startsWith('chrome') && !t.url.startsWith('about:'))
-      .map(t => t.url);
-    await closeTabsByUrls(allUrls);
-    playCloseSound();
+    const allTabs = await chrome.tabs.query({});
+    const extensionId = chrome.runtime.id;
+    const newtabUrl = `chrome-extension://${extensionId}/index.html`;
 
-    document.querySelectorAll('#openTabsMissions .mission-card').forEach(c => {
-      shootConfetti(
-        c.getBoundingClientRect().left + c.offsetWidth / 2,
-        c.getBoundingClientRect().top + c.offsetHeight / 2
-      );
-      animateCardOut(c);
-    });
+    const toClose = allTabs
+      .filter(t => {
+        const url = t.url || '';
+        // Don't close Tab Out itself
+        if (url === newtabUrl || url === 'chrome://newtab/') return false;
+        // Don't close internal chrome pages unless they are real tabs (optional, but safer)
+        if (url.startsWith('chrome://') || url.startsWith('about:')) return false;
+        return true;
+      })
+      .map(t => t.id);
 
-    showToast('All tabs closed. Fresh start.');
+    if (toClose.length > 0) {
+      await chrome.tabs.remove(toClose);
+      playCloseSound();
+
+      document.querySelectorAll('#openTabsMissions .mission-card').forEach(c => {
+        shootConfetti(
+          c.getBoundingClientRect().left + c.offsetWidth / 2,
+          c.getBoundingClientRect().top + c.offsetHeight / 2
+        );
+        animateCardOut(c);
+      });
+
+      showToast('All tabs closed. Fresh start.');
+      // Refresh list
+      await fetchOpenTabs();
+      if (typeof renderDashboard === 'function') renderDashboard();
+    }
     return;
   }
 

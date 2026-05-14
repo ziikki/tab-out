@@ -3,6 +3,8 @@
 /* ----------------------------------------------------------------
    MAIN DASHBOARD RENDERER
    ---------------------------------------------------------------- */
+let domainGroups = [];
+
 
 /**
  * renderStaticDashboard()
@@ -118,7 +120,7 @@ async function renderStaticDashboard() {
     return landingSuffixes.some(s => domain.endsWith(s));
   }
 
-  const domainGroups = Object.values(groupMap).sort((a, b) => {
+  domainGroups = Object.values(groupMap).sort((a, b) => {
     const aIsLanding = a.domain === '__landing-pages__';
     const bIsLanding = b.domain === '__landing-pages__';
     if (aIsLanding !== bIsLanding) return aIsLanding ? -1 : 1;
