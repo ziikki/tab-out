@@ -189,7 +189,7 @@ document.addEventListener('click', async (e) => {
     return;
   }
 
-  // ---- Close all tabs in a domain group ----
+  // ---- Close all tabs in a domain/window group ----
   if (action === 'close-domain-tabs') {
     const domainId = actionEl.dataset.domainId;
     const group = domainGroups.find(g => {
@@ -197,10 +197,16 @@ document.addEventListener('click', async (e) => {
     });
     if (!group) return;
 
-    const tabIds = group.tabs.map(t => t.id).filter(id => id !== undefined);
-    if (tabIds.length > 0) {
-      await chrome.tabs.remove(tabIds);
+    // In window mode, close the entire Chrome window
+    if (tabViewMode === 'window' && group.windowId) {
+      await chrome.windows.remove(group.windowId);
       await fetchOpenTabs();
+    } else {
+      const tabIds = group.tabs.map(t => t.id).filter(id => id !== undefined);
+      if (tabIds.length > 0) {
+        await chrome.tabs.remove(tabIds);
+        await fetchOpenTabs();
+      }
     }
 
     if (card) {
@@ -213,7 +219,7 @@ document.addEventListener('click', async (e) => {
     if (idx !== -1) domainGroups.splice(idx, 1);
 
     const groupLabel = group.domain === '__landing-pages__' ? 'Homepages' : group.domain === '__browser-internals__' ? 'Browser' : (group.label || friendlyDomain(group.domain));
-    showToast(`Closed ${tabIds.length} tab${tabIds.length !== 1 ? 's' : ''} from ${groupLabel}`);
+    showToast(`Closed ${group.tabs.length} tab${group.tabs.length !== 1 ? 's' : ''} from ${groupLabel}`);
 
     const statTabs = document.getElementById('statTabs');
     if (statTabs) statTabs.textContent = openTabs.length;
@@ -256,6 +262,13 @@ document.addEventListener('click', async (e) => {
     return;
   }
 
+  // ---- Toggle tab view mode (domain ↔ window) ----
+  if (action === 'toggle-tab-view-mode') {
+    tabViewMode = tabViewMode === 'domain' ? 'window' : 'domain';
+    await renderStaticDashboard();
+    return;
+  }
+
   // ---- Refresh tabs ----
   if (action === 'refresh-tabs') {
     const btn = actionEl;
@@ -277,8 +290,6 @@ document.addEventListener('click', async (e) => {
         const url = t.url || '';
         // Don't close Tab Out itself
         if (url === newtabUrl || url === 'chrome://newtab/') return false;
-        // Don't close internal chrome pages unless they are real tabs (optional, but safer)
-        if (url.startsWith('chrome://') || url.startsWith('about:')) return false;
         return true;
       })
       .map(t => t.id);

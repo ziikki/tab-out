@@ -225,6 +225,27 @@ header {
   gap: 4px;
 }
 
+/* ---- Tab View Toggle (domain ↔ window) ---- */
+.tab-view-toggle {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--warm-gray);
+  border-radius: 12px;
+  padding: 3px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  letter-spacing: 0.3px;
+}
+
+.tab-view-toggle:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text);
+  border-color: var(--accent-sage);
+}
+
 /* ---- Mission Cards ---- */
 .missions {
   columns: 280px;

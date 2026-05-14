@@ -14,6 +14,7 @@ function renderDomainCard(group) {
   const tabCount = tabs.length;
   const isLanding = group.domain === '__landing-pages__';
   const isInternals = group.domain === '__browser-internals__';
+  const isWindowGroup = !!group.isWindowGroup;
   const stableId = 'domain-' + group.domain.replace(/[^a-z0-9]/g, '-');
 
   const urlCounts = {};
@@ -26,6 +27,10 @@ function renderDomainCard(group) {
     ${ICONS.tabs}
     ${tabCount} tab${tabCount !== 1 ? 's' : ''} open
   </span>`;
+
+  const currentBadge = (isWindowGroup && group.isCurrentWindow)
+    ? `<span class="open-tabs-badge" style="color:var(--accent-sage);background:rgba(90,122,98,0.1);">current</span>`
+    : '';
 
   const dupeBadge = hasDupes
     ? `<span class="open-tabs-badge" style="color:var(--accent-amber);background:rgba(200,113,58,0.08);">
@@ -70,10 +75,14 @@ function renderDomainCard(group) {
     </div>`;
   }).join('') + (extraCount > 0 ? buildOverflowChips(uniqueTabs.slice(8), urlCounts) : '');
 
+  const closeLabel = isWindowGroup
+    ? 'Close window'
+    : `Close all ${tabCount} tab${tabCount !== 1 ? 's' : ''}`;
+
   let actionsHtml = `
     <button class="action-btn close-tabs" data-action="close-domain-tabs" data-domain-id="${stableId}">
       ${ICONS.close}
-      Close all ${tabCount} tab${tabCount !== 1 ? 's' : ''}
+      ${closeLabel}
     </button>`;
 
   if (hasDupes) {
@@ -84,14 +93,18 @@ function renderDomainCard(group) {
       </button>`;
   }
 
+  // Card name
+  const cardName = isLanding ? 'Homepages' : isInternals ? 'Browser' : (group.label || friendlyDomain(group.domain));
+
   return `
     <div class="mission-card domain-card ${hasDupes ? 'has-amber-bar' : 'has-neutral-bar'}" data-domain-id="${stableId}">
       <div class="status-bar"></div>
       <div class="mission-content">
         <div class="mission-top">
-          <span class="mission-name">${isLanding ? 'Homepages' : isInternals ? 'Browser' : (group.label || friendlyDomain(group.domain))}</span>
+          <span class="mission-name">${cardName}</span>
           <span class="domain-debug-label">${group.domain}</span>
           ${tabBadge}
+          ${currentBadge}
           ${dupeBadge}
         </div>
         <div class="mission-pages">${pageChips}</div>
