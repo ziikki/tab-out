@@ -5,6 +5,26 @@
    ---------------------------------------------------------------- */
 
 /**
+ * getTabGroupColor()
+ * 
+ * Maps Chrome's internal color names to CSS hex values.
+ */
+function getTabGroupColor(colorName) {
+  const map = {
+    grey: '#5f6368',
+    blue: '#1a73e8',
+    red: '#d93025',
+    yellow: '#f9ab00',
+    green: '#1e8e3e',
+    pink: '#d01884',
+    purple: '#9334e6',
+    cyan: '#007b83',
+    orange: '#fa903e'
+  };
+  return map[colorName] || '#5f6368';
+}
+
+/**
  * renderDomainCard()
  * 
  * Builds HTML for one mission/domain card
@@ -15,6 +35,7 @@ function renderDomainCard(group) {
   const isLanding = group.domain === '__landing-pages__';
   const isInternals = group.domain === '__browser-internals__';
   const isWindowGroup = !!group.isWindowGroup;
+  const isTabGroup = !!group.isTabGroup;
   const stableId = 'domain-' + group.domain.replace(/[^a-z0-9]/g, '-');
 
   const urlCounts = {};
@@ -77,7 +98,9 @@ function renderDomainCard(group) {
 
   const closeLabel = isWindowGroup
     ? 'Close window'
-    : `Close all ${tabCount} tab${tabCount !== 1 ? 's' : ''}`;
+    : isTabGroup
+      ? 'Close group'
+      : `Close all ${tabCount} tab${tabCount !== 1 ? 's' : ''}`;
 
   let actionsHtml = `
     <button class="action-btn close-tabs" data-action="close-domain-tabs" data-domain-id="${stableId}">
@@ -95,13 +118,19 @@ function renderDomainCard(group) {
 
   // Card name
   const cardName = isLanding ? 'Homepages' : isInternals ? 'Browser' : (group.label || friendlyDomain(group.domain));
+  const groupDot = isTabGroup 
+    ? `<span class="group-dot" style="background:${getTabGroupColor(group.color)}"></span>` 
+    : '';
+
+  const barClass = isTabGroup ? 'has-group-bar' : (hasDupes ? 'has-amber-bar' : 'has-neutral-bar');
+  const barStyle = isTabGroup ? `style="--group-color:${getTabGroupColor(group.color)}"` : '';
 
   return `
-    <div class="mission-card domain-card ${hasDupes ? 'has-amber-bar' : 'has-neutral-bar'}" data-domain-id="${stableId}">
+    <div class="mission-card domain-card ${barClass}" data-domain-id="${stableId}" ${barStyle}>
       <div class="status-bar"></div>
       <div class="mission-content">
         <div class="mission-top">
-          <span class="mission-name">${cardName}</span>
+          <span class="mission-name">${groupDot}${cardName}</span>
           <span class="domain-debug-label">${group.domain}</span>
           ${tabBadge}
           ${currentBadge}

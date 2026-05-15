@@ -49,38 +49,62 @@
 
         <div class="settings-panel" id="settingsPanel" style="display:none">
           <div class="settings-header">Settings</div>
-          
-          <div class="settings-group">
-            <div class="settings-label">Grouping Mode</div>
-            <div class="toggle-group" id="groupingModeToggle">
-              <label>
-                <input type="radio" name="groupingMode" value="hostname" checked>
-                <span>Full Hostname</span>
-              </label>
-              <label>
-                <input type="radio" name="groupingMode" value="domain">
-                <span>Base Domain</span>
-              </label>
+
+          <div class="settings-section">
+            <div class="settings-section-title">Organization</div>
+
+            <div class="settings-group">
+              <div class="settings-row">
+                <div class="settings-label">Domain Grouping</div>
+                <div class="toggle-group" id="groupingModeToggle">
+                  <label>
+                    <input type="radio" name="groupingMode" value="hostname" checked>
+                    <span>Full</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="groupingMode" value="domain">
+                    <span>Base</span>
+                  </label>
+                </div>
+              </div>
+              <div class="settings-subtext" id="groupingModeHint">Group by full address (e.g. mail.google.com).</div>
             </div>
-            <div class="settings-subtext" id="groupingModeHint">
-              Tabs are grouped by their specific address (e.g., play.google.com).
+
+            <div class="settings-group">
+              <div class="settings-row">
+                <div class="settings-label">Use Chrome Groups</div>
+                <div class="toggle-group" id="prioritizeTabGroupsToggle">
+                  <label>
+                    <input type="radio" name="prioritizeTabGroups" value="false" checked>
+                    <span>Off</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="prioritizeTabGroups" value="true">
+                    <span>On</span>
+                  </label>
+                </div>
+              </div>
+              <div class="settings-subtext">Prioritize native Chrome Groups at the top.</div>
             </div>
           </div>
 
-          <div class="settings-group" style="margin-top: 16px;">
-            <div class="settings-label">Google Tasks</div>
-            <div class="toggle-group" id="googleTasksToggle">
-              <label>
-                <input type="radio" name="googleTasksEnabled" value="false" checked>
-                <span>Hidden</span>
-              </label>
-              <label>
-                <input type="radio" name="googleTasksEnabled" value="true">
-                <span>Enabled</span>
-              </label>
-            </div>
-            <div class="settings-subtext">
-              Show Google Tasks in the right sidebar.
+          <div class="settings-section">
+            <div class="settings-section-title">Apps & Sidebar</div>
+            <div class="settings-group">
+              <div class="settings-row">
+                <div class="settings-label">Google Tasks</div>
+                <div class="toggle-group" id="googleTasksToggle">
+                  <label>
+                    <input type="radio" name="googleTasksEnabled" value="false" checked>
+                    <span>Off</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="googleTasksEnabled" value="true">
+                    <span>On</span>
+                  </label>
+                </div>
+              </div>
+              <div class="settings-subtext">Show your Google Tasks in the right sidebar.</div>
             </div>
           </div>
 

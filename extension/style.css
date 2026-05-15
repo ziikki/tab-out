@@ -294,6 +294,11 @@ header {
   background: var(--warm-gray);
 }
 
+.mission-card.has-group-bar::before {
+  background: var(--group-color);
+  height: 4px;
+}
+
 .mission-card:hover {
   box-shadow: 0 4px 20px var(--shadow);
   transform: translateY(-1px);
@@ -338,6 +343,17 @@ header {
   font-size: 15px;
   color: var(--ink);
   letter-spacing: -0.2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.group-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .mission-tag {
@@ -1440,37 +1456,75 @@ footer {
   animation: bannerSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ---- SETTINGS PANEL REWRITE ---- */
 .settings-header {
   font-family: 'Newsreader', serif;
   font-size: 18px;
   font-weight: 500;
   color: var(--ink);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   border-bottom: 1px solid var(--warm-gray);
   padding-bottom: 8px;
 }
 
+.settings-section {
+  margin-bottom: 24px;
+}
+
+.settings-section:last-child {
+  margin-bottom: 0;
+}
+
+.settings-section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
 .settings-group {
+  margin-bottom: 16px;
+}
+
+.settings-group:last-child {
+  margin-bottom: 0;
+}
+
+.settings-group:last-child {
+  margin-bottom: 0;
+}
+
+.settings-row {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
 }
 
 .settings-label {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.settings-subtext {
+  font-size: 11px;
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  line-height: 1.4;
+  margin-top: 0;
+  opacity: 0.8;
 }
 
 /* Segmented Toggle */
 .toggle-group {
   display: flex;
   background: var(--paper);
-  padding: 4px;
+  padding: 3px;
   border-radius: 8px;
   border: 1px solid var(--warm-gray);
+  min-width: 110px;
 }
 
 .toggle-group label {
@@ -1485,27 +1539,18 @@ footer {
 
 .toggle-group span {
   display: block;
-  padding: 8px 4px;
-  font-size: 13px;
+  padding: 4px 10px;
+  font-size: 11px;
   font-weight: 500;
   border-radius: 6px;
+  transition: all 0.2s ease;
   color: var(--muted);
-  transition: all 0.2s;
 }
 
 .toggle-group input:checked+span {
   background: #fff;
   color: var(--ink);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.settings-subtext {
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.5;
-  margin-top: 4px;
-  padding: 0 4px;
-  opacity: 0.8;
 }
 
 /* ---- Debug label — hidden by default, shown in debug mode ---- */

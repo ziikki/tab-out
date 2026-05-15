@@ -29,6 +29,7 @@ async function fetchOpenTabs() {
       title: t.title,
       windowId: t.windowId,
       active: t.active,
+      groupId: t.groupId,
       // Flag Tab Out's own pages so we can detect duplicate new tabs
       isTabOut: t.url === newtabUrl || t.url === 'chrome://newtab/',
     }));

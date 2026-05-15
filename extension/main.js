@@ -19,8 +19,8 @@ async function initSettings() {
   const hint = document.getElementById('groupingModeHint');
   if (hint) {
     hint.textContent = mode === 'hostname'
-      ? 'Tabs are grouped by their specific address (e.g., play.google.com).'
-      : 'Subdomains are merged into their base domain (e.g., all google.com tabs).';
+      ? 'Group by full address (e.g. mail.google.com).'
+      : 'Group by base domain (e.g. google.com).';
   }
 
   const tasksEnabled = await getGoogleTasksEnabled();
@@ -33,6 +33,12 @@ async function initSettings() {
   if (tasksSection) {
     tasksSection.style.display = tasksEnabled ? 'block' : 'none';
   }
+
+  const tabGroupsEnabled = await getPrioritizeTabGroups();
+  const tabGroupsRadios = document.querySelectorAll('input[name="prioritizeTabGroups"]');
+  tabGroupsRadios.forEach(r => {
+    if ((r.value === 'true') === tabGroupsEnabled) r.checked = true;
+  });
 }
 
 // Handle broken favicons without violating CSP (replaces inline onerror)

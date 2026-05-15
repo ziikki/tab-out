@@ -137,3 +137,22 @@ async function getGoogleTasksEnabled() {
 async function setGoogleTasksEnabled(enabled) {
   await chrome.storage.local.set({ googleTasksEnabled: enabled });
 }
+
+/**
+ * getPrioritizeTabGroups()
+ * 
+ * Returns boolean whether native Chrome Tab Groups should be prioritized. Default false.
+ */
+async function getPrioritizeTabGroups() {
+  const { prioritizeTabGroups = false } = await chrome.storage.local.get('prioritizeTabGroups');
+  return prioritizeTabGroups;
+}
+
+/**
+ * setPrioritizeTabGroups(enabled)
+ * 
+ * Sets whether native Chrome Tab Groups should be prioritized.
+ */
+async function setPrioritizeTabGroups(enabled) {
+  await chrome.storage.local.set({ prioritizeTabGroups: enabled });
+}

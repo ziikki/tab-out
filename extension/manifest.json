@@ -4,7 +4,7 @@
   "version": "1.2.0",
   "description": "Keep tabs on your tabs. New tab page that groups your open tabs by domain and lets you close them with style.",
   "author": "Solareda (https://github.com/ziikki)",
-  "permissions": ["tabs", "activeTab", "storage", "declarativeNetRequest", "declarativeNetRequestFeedback"],
+  "permissions": ["tabs", "tabGroups", "activeTab", "storage", "declarativeNetRequest", "declarativeNetRequestFeedback"],
   "host_permissions": ["https://tasks.google.com/*"],
   "chrome_url_overrides": { "newtab": "index.html" },
   "background": { "service_worker": "background.js" },

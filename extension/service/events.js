@@ -394,11 +394,9 @@ document.addEventListener('change', async (e) => {
     const hint = document.getElementById('groupingModeHint');
     if (hint) {
       hint.textContent = mode === 'hostname'
-        ? 'Tabs are grouped by their specific address (e.g., play.google.com).'
-        : 'Subdomains are merged into their base domain (e.g., all google.com tabs).';
+        ? 'Group by full address (e.g. mail.google.com).'
+        : 'Group by base domain (e.g. google.com).';
     }
-
-    showToast(`Grouping mode: ${mode === 'hostname' ? 'Full Hostname' : 'Base Domain'}`);
   } else if (e.target.name === 'googleTasksEnabled') {
     const enabled = e.target.value === 'true';
     await setGoogleTasksEnabled(enabled);
@@ -406,6 +404,9 @@ document.addEventListener('change', async (e) => {
     if (tasksSection) {
       tasksSection.style.display = enabled ? 'block' : 'none';
     }
-    showToast(`Google Tasks: ${enabled ? 'Enabled' : 'Hidden'}`);
+  } else if (e.target.name === 'prioritizeTabGroups') {
+    const enabled = e.target.value === 'true';
+    await setPrioritizeTabGroups(enabled);
+    await renderStaticDashboard();
   }
 });

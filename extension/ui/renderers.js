@@ -49,6 +49,59 @@ function groupTabsByWindow(displayTabs) {
 }
 
 /**
+ * extractTabGroups(tabs)
+ *
+ * If prioritizing tab groups is enabled, pulls out tabs in native groups
+ * and fetches group metadata (title, color) from Chrome.
+ */
+async function extractTabGroups(tabs) {
+  const isEnabled = await getPrioritizeTabGroups();
+
+  if (!isEnabled) return { tabGroups: [], remainingTabs: tabs };
+
+  const groupMap = {};
+  const remainingTabs = [];
+
+  for (const tab of tabs) {
+    if (tab.groupId !== -1) {
+      if (!groupMap[tab.groupId]) {
+        groupMap[tab.groupId] = {
+          domain: `__tab-group-${tab.groupId}__`,
+          tabs: [],
+          groupId: tab.groupId,
+          isTabGroup: true
+        };
+      }
+      groupMap[tab.groupId].tabs.push(tab);
+    } else {
+      remainingTabs.push(tab);
+    }
+  }
+
+  const groups = Object.values(groupMap);
+  const finalTabGroups = [];
+
+  for (const g of groups) {
+    try {
+      const meta = await chrome.tabGroups.get(g.groupId);
+      // If the group has no title, we treat it as "ungrouped" (Manual Override requirement)
+      if (meta.title && meta.title.trim().length > 0) {
+        g.label = meta.title;
+        g.color = meta.color;
+        finalTabGroups.push(g);
+      } else {
+        remainingTabs.push(...g.tabs);
+      }
+    } catch {
+      // Group disappeared or error, treat as ungrouped
+      remainingTabs.push(...g.tabs);
+    }
+  }
+
+  return { tabGroups: finalTabGroups, remainingTabs };
+}
+
+/**
  * renderStaticDashboard()
  * 
  * The main orchestrator function that triggers all sub-renderers.
@@ -64,9 +117,12 @@ async function renderStaticDashboard() {
   await fetchOpenTabs();
   const displayTabs = openTabs.filter(t => !t.isTabOut);
 
-  // --- Group tabs ---
+  // --- Extract Tab Groups override ---
+  const { tabGroups, remainingTabs } = await extractTabGroups(displayTabs);
+
+  // --- Group remaining tabs ---
   if (tabViewMode === 'window') {
-    domainGroups = groupTabsByWindow(displayTabs);
+    domainGroups = groupTabsByWindow(remainingTabs);
   } else {
     // --- Group tabs by domain (default) ---
     const groupingMode = await getGroupingMode();
@@ -122,7 +178,7 @@ async function renderStaticDashboard() {
       } catch { return null; }
     }
 
-    for (const tab of displayTabs) {
+    for (const tab of remainingTabs) {
       try {
         const url = tab.url || '';
         if (isBrowserInternal(url)) {
@@ -145,7 +201,7 @@ async function renderStaticDashboard() {
         }
         let rawHostname = tab.url && tab.url.startsWith('file://') ? 'local-files' : new URL(tab.url).hostname;
         if (!rawHostname) continue;
-        
+
         const groupKey = getGroupingKey(rawHostname, groupingMode);
         if (!groupMap[groupKey]) groupMap[groupKey] = { domain: groupKey, tabs: [] };
         groupMap[groupKey].tabs.push(tab);
@@ -176,6 +232,9 @@ async function renderStaticDashboard() {
       return b.tabs.length - a.tabs.length;
     });
   }
+
+  // Combine Chrome Tab Groups with fallback cards
+  domainGroups = [...tabGroups, ...domainGroups];
 
   // --- Render tab cards ---
   const openTabsSection = document.getElementById('openTabsSection');
