@@ -1,52 +1,30 @@
-# Tab Out (Fork)
+# Tab Out
 
 **Keep tabs on your tabs.**
 
-> This is a fork of [Tab Out](https://github.com/zarazhangrui/tab-out) by [Zara Zhang](https://x.com/zarazhangrui). The original is a beautifully designed Chrome extension — this fork adds a few tweaks on top.
-
-Tab Out is a Chrome extension that replaces your new tab page with a dashboard of everything you have open. Tabs are grouped by domain, with homepages (Gmail, X, LinkedIn, etc.) pulled into their own group. Close tabs with a satisfying swoosh + confetti.
+Tab Out is a minimalist Chrome extension that replaces your new tab page with a beautiful dashboard of everything you have open. Tabs are intelligently grouped by domain, with landing pages like Gmail and GitHub pulled into their own group. Close tabs with a satisfying swoosh + confetti burst.
 
 No server. No account. No external API calls. Just a Chrome extension.
 
----
-
-## Fork Changes
-
-- **Browser internal tabs** (`chrome://`, `about:`, etc.) are now shown in a "Browser" group instead of hidden
-- **Debug mode** — small toggle icon in the top-right reveals the raw domain key for each group
-- **Refresh button** — re-reads your open tabs without opening a new tab
-- **Google homepage** added to the Homepages landing page group
+![Tab Out Dashboard](screenshots/dashboard.jpg)
 
 ---
 
-## Install with a coding agent
+## ✨ Features You'll Love
 
-Send your coding agent (Claude Code, Codex, etc.) this repo and say **"install this"**:
-
-```
-https://github.com/ziikki/tab-out
-```
-
-The agent will walk you through it. Takes about 1 minute.
-
----
-
-## Features
-
-- **See all your tabs at a glance** on a clean grid, grouped by domain
-- **Homepages group** pulls Gmail inbox, X home, YouTube, LinkedIn, GitHub homepages into one card
-- **Close tabs with style** with swoosh sound + confetti burst
-- **Duplicate detection** flags when you have the same page open twice, with one-click cleanup
-- **Click any tab to jump to it** across windows, no new tab opened
-- **Save for later** bookmark tabs to a checklist before closing them
-- **Localhost grouping** shows port numbers next to each tab so you can tell your vibe coding projects apart
-- **Expandable groups** show the first 8 tabs with a clickable "+N more"
-- **100% local** your data never leaves your machine
-- **Pure Chrome extension** no server, no Node.js, no npm, no setup beyond loading the extension
+- **📦 Tab Grouping** — Group your tabs by **domain name or window** for instant clarity.
+- **🏷️ Native Support** — Fully recognizes and respects your existing **Chrome Tab Groups**.
+- **✅ Built-in Google Tasks** — Manage your to-dos directly from your dashboard—no context switching.
+- **🏠 Home Base** — Gmail, X, LinkedIn, and YouTube homepages are automatically grouped into a clean "Home" card.
+- **🧹 Close with Style** — Close tabs with a satisfying **swoosh + confetti** burst.
+- **👯 Duplicate Detection** — Spot and close duplicate tabs with a single click.
+- **💾 Save for Later** — Bookmark individual tabs to a local checklist before closing them.
+- **🛠️ Power Tools** — Includes a **Refresh** button to update tabs instantly and a **Debug Mode** for domain tracking.
+- **🔒 100% Local** — Your data never leaves your machine. No accounts, no servers, no tracking.
 
 ---
 
-## Manual Setup
+## ⚡ Quick Install
 
 **1. Clone the repo**
 
